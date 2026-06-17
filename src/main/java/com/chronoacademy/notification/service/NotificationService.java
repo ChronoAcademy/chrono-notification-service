@@ -1,7 +1,10 @@
 package com.chronoacademy.notification.service;
 
 import com.chronoacademy.notification.entity.Notification;
+import com.chronoacademy.notification.enums.NotificationChannel;
 import com.chronoacademy.notification.enums.NotificationStatus;
+import com.chronoacademy.notification.enums.NotificationType;
+import com.chronoacademy.notification.event.TaskCreatedEvent;
 import com.chronoacademy.notification.exception.NotificationNotFoundException;
 import com.chronoacademy.notification.exception.UserNotFoundException;
 import com.chronoacademy.notification.feign.UserServiceClient;
@@ -36,6 +39,22 @@ public class NotificationService {
     }
 
     // ─── READ ALL BY USER ──────────────────────────────────────────────────────
+    public Notification createTaskCreatedNotification(TaskCreatedEvent event) {
+        Notification notification = Notification.builder()
+                .userId(String.valueOf(event.getUserId()))
+                .title("New task created")
+                .message("Task \"" + event.getTitle() + "\" was created with priority " + event.getPriority())
+                .type(NotificationType.TASK_CREATED)
+                .status(NotificationStatus.UNREAD)
+                .channel(NotificationChannel.PUSH)
+                .sourceService("task-service")
+                .sourceEntityId(String.valueOf(event.getTaskId()))
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        return notificationRepository.save(notification);
+    }
+
     public List<Notification> getAllByUserId(String userId) {
         return notificationRepository.findByUserId(userId);
     }

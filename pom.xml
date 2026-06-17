@@ -14,7 +14,7 @@
     <groupId>com.chronoacademy</groupId>
     <artifactId>chrono-notification-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>notification-service</name>
+    <name>chrono-notification-service</name>
     <description>Chrono-Academy - Notification Microservice</description>
 
     <properties>
@@ -49,6 +49,22 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- RabbitMQ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!-- Monitoring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
         <!-- Lombok -->
